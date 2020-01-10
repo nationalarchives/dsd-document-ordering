@@ -44,7 +44,7 @@ h1 {
 
 h2 {
 	font-family : Verdana, Arial, Helvetica, sans-serif;
-	font-size: small;
+	font-size: 16px;
 	font-weight: bold;
 	color: #000000;
 	margin: 10px 0 0 0;
@@ -147,6 +147,7 @@ h1.bodytext {
 h1.parchment {
 	color : #999966;
 	margin: 10px 0px 0px 0px;
+	font-size:20px;
 }
 
 h1.parchmentwide {
@@ -2057,6 +2058,9 @@ div.readerinfo p
 }
 #img1 {border:none}
 
+#dsd-opening-times-slot td {
+	font-size:16px
+}
 #dsd-opening-times-slot td.valid {
 	background:#A1DBB2;
 	color:#000000;

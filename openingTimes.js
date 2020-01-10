@@ -1,8 +1,16 @@
 var openingTimes = (function() {
   "use strict";
 
+  // Properties
   var _today = new Date();
 
+  // Methods
+
+  /**
+   * @methodName _getTime hidden method
+   * @description Get the local time in a string format
+   * @return 16:30 (Time format example)
+   */
   function _getTime() {
     return _today.toLocaleTimeString([], {
       hour: "2-digit",
@@ -10,6 +18,11 @@ var openingTimes = (function() {
     });
   }
 
+  /**
+   * @methodName _changeStatus hidden method
+   * @param String slot number
+   * @info Update the slot status
+   */
   function _changeStatus(slot) {
     var list = document.querySelector("#dsd-opening-times-slot").rows;
     for (var i = 0; i < list.length; i++) {
@@ -23,12 +36,24 @@ var openingTimes = (function() {
     }
   }
 
+  /**
+   * @methodName  checkTime visible method
+   * @param String end time
+   * @param String previous ending slot time
+   * @param String slot number
+   * @description select the next available slot
+   */
   function checkTime(end, prevEnd, slot) {
     if (_getTime() <= end && _getTime() > prevEnd) {
       _changeStatus(slot);
     }
   }
 
+  /**
+   * @methodName  noSlots visible method
+   * @param String
+   * @description Change text when there are no more available slots
+   */
   function noSlots(lastSlot) {
     if (_getTime() > lastSlot) {
       document.querySelector("h2.parchment").innerText =
@@ -36,6 +61,7 @@ var openingTimes = (function() {
     }
   }
 
+  // Reveal methods
   return {
     checkTime: checkTime,
     noSlots: noSlots

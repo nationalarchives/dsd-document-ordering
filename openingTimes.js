@@ -1,3 +1,5 @@
+
+
 var openingTimes = (function() {
   "use strict";
 
@@ -12,7 +14,9 @@ var openingTimes = (function() {
    * @return 16:30 (Time format example)
    */
   function _getTime() {
-    return _today.toLocaleTimeString([], {
+    return "13:01";
+    return _today.toLocaleTimeString('en-GB', {
+      hour12: false,
       hour: "2-digit",
       minute: "2-digit"
     });
@@ -38,13 +42,15 @@ var openingTimes = (function() {
 
   /**
    * @methodName  checkTime visible method
-   * @param String end time
-   * @param String previous ending slot time
+   * @param String previous slot ending time
+   * @param String next slot start time
    * @param String slot number
    * @description select the next available slot
    */
-  function checkTime(end, prevEnd, slot) {
-    if (_getTime() <= end && _getTime() > prevEnd) {
+  function checkTime(prevEnd, nextStart, slot) {
+    var currentTimeWithoutColon = _getTime().replace(':','.').replace(/[A-Z]/gi,'');
+
+    if (currentTimeWithoutColon > prevEnd && currentTimeWithoutColon < nextStart) {
       _changeStatus(slot);
     }
   }
@@ -55,9 +61,12 @@ var openingTimes = (function() {
    * @description Change text when there are no more available slots
    */
   function noSlots(lastSlot) {
-    if (_getTime() > lastSlot) {
+    var currentTimeWithoutColon = _getTime().replace(':','.').replace(/[A-Z]/gi,'');
+    var lastSlotWithoutColon = lastSlot.replace(':','.').replace(/[A-Z]/gi,'');
+
+    if (currentTimeWithoutColon > lastSlotWithoutColon) {
       document.querySelector("h2.parchment").innerText =
-        "Document ordering finished at 15:30 today";
+          "Document ordering finished at 15:30 today";
     }
   }
 
@@ -66,11 +75,13 @@ var openingTimes = (function() {
     checkTime: checkTime,
     noSlots: noSlots
   };
+
 })();
 
-openingTimes.checkTime("10:30", "07:00", "slot1");
-openingTimes.checkTime("11:45", "10:30", "slot2");
-openingTimes.checkTime("13:00", "11:45", "slot3");
-openingTimes.checkTime("14:15", "13:00", "slot4");
-openingTimes.checkTime("15:30", "14:15", "slot5");
-openingTimes.noSlots("15:30");
+
+openingTimes.checkTime("00.00", "09.45", "slot1");
+openingTimes.checkTime("10.30", "11.00", "slot2");
+openingTimes.checkTime("11.45", "12.15", "slot3");
+openingTimes.checkTime("13.00", "13.30", "slot4");
+openingTimes.checkTime("14.15", "14.45", "slot5");
+openingTimes.noSlots("15.30");

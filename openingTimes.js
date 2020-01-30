@@ -14,7 +14,6 @@ var openingTimes = (function() {
    * @return 16:30 (Time format example)
    */
   function _getTime() {
-    return "13:01";
     return _today.toLocaleTimeString('en-GB', {
       hour12: false,
       hour: "2-digit",
